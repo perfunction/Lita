@@ -3,14 +3,18 @@
 
 	<mx:Script>
 		<![CDATA[
-			import com.dehats.sqla.model.presentation.SQLStatementPM;
-			import com.dehats.sqla.model.presentation.MainPM;
 			import com.dehats.sqla.model.AssetManager;
+			import com.dehats.sqla.model.presentation.MainPM;
+			import com.dehats.sqla.model.presentation.SQLStatementPM;
 
 			[Bindable]
 			public var pm:SQLStatementPM;
 			
-			
+			private function RunSQL():void{
+				
+				var sqlSelectedString:String = statementTa.text.substring(statementTa.selectionBeginIndex, statementTa.selectionEndIndex );
+				pm.executeStatement((sqlSelectedString.length > 0) ? sqlSelectedString : statementTa.text);
+			}
 			private function onKeyUp(pEvt:KeyboardEvent):void
 			{
 				if(pEvt.keyCode==Keyboard.ENTER && pEvt.controlKey)
@@ -40,7 +44,7 @@
 	
 	<mx:Button y="179" label="Execute (Ctrl+Enter)"
 		icon="{ AssetManager.ICON_GEAR_DB}"
-		click=" pm.executeStatement(statementTa.text)" x="10"/>
+		click=" RunSQL()" x="10"/>
 		
 	<mx:DataGrid 
 		horizontalScrollPolicy="auto"

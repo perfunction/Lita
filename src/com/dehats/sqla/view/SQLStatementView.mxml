@@ -24,10 +24,7 @@
 			{
 				if (pEvt.keyCode == Keyboard.F5) {
 					RunSQL();
-				} else if(pEvt.keyCode==Keyboard.ENTER && pEvt.controlKey)
-				{
-					pm.executeStatement(statementTa.text);
-				}
+				} 
 			}
 			
 			override protected function updateDisplayList(w:Number, h:Number):void
@@ -56,7 +53,7 @@
 		dataProvider="{ pm.persoStatementHist}"
 		y="36" height="135" right="10" width="150"></mx:List>
 	
-	<mx:Button y="179" label="Execute (Ctrl+Enter)"
+	<mx:Button y="179" label="Execute (F5)"
 		icon="{ AssetManager.ICON_GEAR_DB}"
 		click=" RunSQL()" x="10"/>
 		

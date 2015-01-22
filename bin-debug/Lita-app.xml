@@ -8,7 +8,7 @@
 
     <name>Lita</name> 
 
-    <versionNumber>1.8.0</versionNumber>
+        <versionNumber>1.8.0</versionNumber>
 
     <initialWindow>
 
@@ -32,7 +32,7 @@
 
     <description>An administration interface for your SQLite databases.</description>
 
-    <copyright>David Deraedt - 2008, Josh Miller - 2015</copyright>
+    <copyright>David Deraedt - 2008</copyright>
 
     <allowBrowserInvocation>true</allowBrowserInvocation>
 

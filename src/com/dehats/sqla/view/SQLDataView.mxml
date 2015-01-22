@@ -153,8 +153,13 @@
 						
 						case SQLType.DATE:
 							var df:DateTimeEditor = colToComponent[col.name] as DateTimeEditor;
-							if( pData==null)  df.selectedDate = null ;
-							else df.selectedDate = pData[col.name];						
+							var date:Date;
+							
+							if( pData==null) date = null;
+							else date = pData[col.name] as Date;
+							
+							if (date != null)
+								df.selectedDate = date;						
 							break;
 						
 						case SQLType.TEXT:

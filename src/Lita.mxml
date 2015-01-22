@@ -184,14 +184,13 @@
 							 enabled="{ mainPM.isValidDBOpen}" 
 							 selectedTabTextStyleName="SelectedTabText">
 				
-				<view:SQLStructureView id="structureTab" label="Structure" width="100%" height="100%" 
-									   pm="{ mainPM.sqlStructureViewPM }"/>
-				
-				
 				<s:NavigatorContent label="Data">
 					<view:SQLDataView id="dataView"  width="100%" height="100%" 
-						pm="{ mainPM.sqldataViewPM}"/>			
+									  pm="{ mainPM.sqldataViewPM}"/>			
 				</s:NavigatorContent>
+				
+				<view:SQLStructureView id="structureTab" label="Structure" width="100%" height="100%" 
+									   pm="{ mainPM.sqlStructureViewPM }"/>
 				
 				<view:IndicesView label="Indices" width="100%" height="100%" 
 								  pm="{ mainPM.indicesPM}"/>

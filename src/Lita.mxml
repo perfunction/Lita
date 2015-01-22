@@ -10,13 +10,12 @@
 	creationComplete=" onCreationComplete()"
 	invoke=" mainPM.onInvoke(event);"
 	implements="com.dehats.sqla.model.presentation.IMainView">
-	
+		
 	<fx:Style source="AppStyles.css"/>
 	
 	<fx:Script>
 		<![CDATA[ 
 			import com.dehats.sqla.view.WelcomeDialog;
-			import com.dehats.sqla.view.CopyTableDialog;
 			import com.dehats.sqla.view.ReencryptionDialog;
 			import com.dehats.sqla.view.UpgradeEncryptionDialog;
 			import com.dehats.sqla.model.presentation.IMainView;
@@ -25,12 +24,8 @@
 			import com.dehats.sqla.view.OpenFileDialog;
 			import com.dehats.sqla.model.AssetManager;
 			import com.dehats.sqla.model.presentation.MainPM;
-			import mx.controls.Alert;
 			import mx.managers.PopUpManager;
-			import mx.containers.TitleWindow;
 			import com.dehats.sqla.view.CreateTableDialog;
-			import mx.events.CloseEvent;
-			import com.dehats.sqla.model.MainModel; 
 			
 			[Bindable]
 			private var mainPM:MainPM = new MainPM(nativeApplication);
@@ -60,8 +55,10 @@
 			
 			private function center():void
 			{
-				nativeWindow.x = (Capabilities.screenResolutionX - nativeWindow.width) / 2; 
-				nativeWindow.y = (Capabilities.screenResolutionY - nativeWindow.height) / 2;				
+				nativeWindow.maximize();
+				
+				//nativeWindow.x = (Capabilities.screenResolutionX - nativeWindow.width) / 2; 
+				//nativeWindow.y = (Capabilities.screenResolutionY - nativeWindow.height) / 2;				
 			}	
 			
 			// Dialogs
@@ -171,32 +168,38 @@
 	<mx:Label y="50" right="10"
 			  text="{'Last statement executed in '+mainPM.lastExecTime+' ms'}" />
 	
-	<view:TableListView
-		enabled="{ mainPM.isValidDBOpen}"
-		pm="{ mainPM.tableListPM}" 
-		left="10" top="51" bottom="10" width="189"/>		
-	
-	<mx:TabNavigator left="207" bottom="10" top="51" right="10" creationPolicy="all"
-					 selectedIndex="{mainPM.selectedTab}"
-					 enabled="{ mainPM.isValidDBOpen}" 
-					 selectedTabTextStyleName="SelectedTabText">
-		
-		<view:SQLStructureView id="structureTab" label="Structure" width="100%" height="100%" 
-							   pm="{ mainPM.sqlStructureViewPM }"/>
-		
-		
-		<s:NavigatorContent label="Data">
-			<view:SQLDataView id="dataView"  width="100%" height="100%" 
-				pm="{ mainPM.sqldataViewPM}"/>			
-		</s:NavigatorContent>
-		
-		<view:IndicesView label="Indices" width="100%" height="100%" 
-						  pm="{ mainPM.indicesPM}"/>
-		
-		<view:SQLStatementView label="SQL" width="100%" height="100%"
-							   pm="{ mainPM.sqlStatementPM}" />
-		
-	</mx:TabNavigator>		
-	
-	
+	<mx:HDividedBox id="hdivbox" top="50" width="100%" height="100%">		
+		<mx:VBox width="25%" height="100%">
+			
+			<view:TableListView
+				enabled="{ mainPM.isValidDBOpen}"
+				pm="{ mainPM.tableListPM}"  
+				width="100%" height="100%"/>		
+			
+		</mx:VBox>
+		<mx:VBox width="75%" height="100%">
+			
+			<mx:TabNavigator width="100%" height="100%" creationPolicy="all"
+							 selectedIndex="{mainPM.selectedTab}"
+							 enabled="{ mainPM.isValidDBOpen}" 
+							 selectedTabTextStyleName="SelectedTabText">
+				
+				<view:SQLStructureView id="structureTab" label="Structure" width="100%" height="100%" 
+									   pm="{ mainPM.sqlStructureViewPM }"/>
+				
+				
+				<s:NavigatorContent label="Data">
+					<view:SQLDataView id="dataView"  width="100%" height="100%" 
+						pm="{ mainPM.sqldataViewPM}"/>			
+				</s:NavigatorContent>
+				
+				<view:IndicesView label="Indices" width="100%" height="100%" 
+								  pm="{ mainPM.indicesPM}"/>
+				
+				<view:SQLStatementView label="SQL" width="100%" height="100%"
+									   pm="{ mainPM.sqlStatementPM}" />
+				
+			</mx:TabNavigator>		
+		</mx:VBox>
+	</mx:HDividedBox>	
 </s:WindowedApplication>

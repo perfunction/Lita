@@ -1,0 +1,119 @@
+/* CSS file */
+@namespace s "library://ns.adobe.com/flex/spark";
+@namespace mx "library://ns.adobe.com/flex/mx";
+
+global
+{
+	color: #444466;
+	fontFamily: Arial;
+	font-size:11;
+	backgroundGradientAlphas: 1.0, 1.0;
+	backgroundGradientColors: #075CF7, #02074B;
+	/*backgroundDisabledColor: #FF3366;*/
+	
+}
+
+mx|Alert
+{
+	font-size:12;
+}
+mx|FormItemLabel
+{
+	fontSize: 12;
+}
+
+.ImportantLabel
+{
+	fontSize: 12;
+}
+
+
+mx|ApplicationControlBar
+{
+	fillAlphas: 0.5, 1.0;
+}
+mx|Label.MainTitle
+{
+	fontSize: 20;
+	fontStyle: normal;
+	textDecoration: normal;
+	fontWeight: normal;
+	/*fontFamily: Georgia;*/
+}
+
+.TableList
+{
+	font-weight:normal;
+	fontSize: 12;
+}
+
+mx|TitleWindow
+{
+	/*borderColor: #165BE8;*/
+	borderAlpha: 1.0;
+	titleStyleName: titleWindowTitle;
+}
+
+.WhiteButton
+{
+	color:#FFFFFF;
+}
+mx|Panel
+{
+	titleStyleName: panelTitle;
+}
+mx|TabBar
+{
+	disabled-color:#BBBBBB;
+	text-roll-over-color:#666666;
+	text-selected-color:#333333;
+	/*color: #FFFFFF;*/
+	fontSize: 14;
+	fontWeight: normal;
+	tabStyleName: tabBarTab;
+	firstTabStyleName: tabBarFirstTab;
+	selectedTabTextStyleName: tabBarSelectedTabText;
+}
+
+
+
+.SelectedTabText
+{
+	/*color:#000000;*/
+}
+
+mx|ToolTip
+{
+	fontSize: 11;
+}
+.titleWindowTitle
+{
+	fontSize: 14;
+}
+.panelTitle
+{
+	fontSize: 14;
+}
+mx|Form
+{
+	border-style:solid;
+	backgroundColor: #E4DDFE;
+}
+.tabBarTab
+{
+	fontWeight: normal;
+}
+.tabBarFirstTab
+{
+	fontWeight: normal;
+}
+.tabBarSelectedTabText
+{
+}
+
+mx|TextArea.statement
+{
+	font-family:"Courier New";
+	fontSize: 12;
+}
+

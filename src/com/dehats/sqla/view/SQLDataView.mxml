@@ -13,8 +13,8 @@
 		<![CDATA[
 			import com.dehats.air.sqlite.SQLType;
 			import com.dehats.flex.controls.DateTimeEditor;
-			import com.dehats.sqla.model.AssetManager;
 			import com.dehats.sqla.model.presentation.SQLDataViewPM;
+			import com.dehats.sqla.model.AssetManager;
 			
 			import mx.binding.utils.BindingUtils;
 			import mx.containers.FormHeading;

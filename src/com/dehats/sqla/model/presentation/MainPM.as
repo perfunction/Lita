@@ -1,8 +1,5 @@
 package com.dehats.sqla.model.presentation
 {
-	import air.update.ApplicationUpdaterUI;
-	import air.update.events.UpdateEvent;
-	
 	import com.dehats.air.sqlite.SQLiteErrorEvent;
 	import com.dehats.sqla.events.EncryptionErrorEvent;
 	import com.dehats.sqla.model.FileManager;
@@ -15,6 +12,7 @@ package com.dehats.sqla.model.presentation
 	import flash.data.SQLTableSchema;
 	import flash.desktop.NativeApplication;
 	import flash.display.NativeMenu;
+	import flash.errors.SQLError;
 	import flash.events.Event;
 	import flash.events.InvokeEvent;
 	import flash.filesystem.File;
@@ -22,6 +20,9 @@ package com.dehats.sqla.model.presentation
 	import flash.net.navigateToURL;
 	
 	import mx.controls.Alert;
+	
+	import air.update.ApplicationUpdaterUI;
+	import air.update.events.UpdateEvent;
 	
 	[Bindable]
 	public class MainPM extends AbstractPM
@@ -452,9 +453,11 @@ package com.dehats.sqla.model.presentation
 		
 		public function executeStatement(pStatement:String):void
 		{			
-
-			var sqlResult:SQLResult =  mainModel.executeStatement(pStatement);
+			sqlStatementPM.hasError = false;
+			sqlStatementPM.error = "";
 			
+			var sqlResult:SQLResult = mainModel.executeStatement(pStatement);
+						
 			if( sqlResult==null) sqlStatementPM.results=[];
 			
 			else {
@@ -531,15 +534,22 @@ package com.dehats.sqla.model.presentation
 			navigateToURL(new URLRequest(HELP_URL));
 		}
 		
-
 		private function onSQLiteError(pEvt:SQLiteErrorEvent):void
 		{
-			var msg:String = pEvt.error.message;
 			trace(pEvt.error)
+			
+			/*
+			var msg:String = pEvt.error.message;
 			var notes:String="\n";
 			if(pEvt.error.errorID==3138) notes+="If the database file is encrypted, you may encounter this error if you've entered a wrong password.";
 			if(pEvt.statement!="") msg+="\n\n"+"Statement"+":\n"+pEvt.statement;
 			Alert.show(msg+notes, "Error");
+			*/
+				
+			if (sqlStatementPM) {
+				sqlStatementPM.hasError = true;
+				sqlStatementPM.error = pEvt.error.getStackTrace();
+			}
 		}
 
 		private function onEncryptionError(pEvt:EncryptionErrorEvent):void

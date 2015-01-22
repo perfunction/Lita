@@ -13,6 +13,7 @@
 		
 	<fx:Style source="AppStyles.css"/>
 	
+	
 	<fx:Script>
 		<![CDATA[ 
 			import com.dehats.sqla.view.WelcomeDialog;

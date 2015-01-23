@@ -20,7 +20,7 @@ package com.dehats.sqla.model
 	[Bindable]
 	public class MainModel extends EventDispatcher
 	{
-
+		
 		// DataBase		
 		public static const LEGACY_ENCRYPTION_KEY_HASH:String = "eb142b0cae0baa72a767ebc0823d1be94e14c5bfc52d8e417fc4302fceb6240c";
 		
@@ -30,10 +30,10 @@ package com.dehats.sqla.model
 		public var dbIndices:Array;
 		public var dbViews:Array;
 		public var tableRecords:Array;		
-				
+		
 		private var db:SQLiteDBHelper;
 		private var schemas:SQLSchemaResult;
-						
+		
 		public function MainModel()
 		{
 			db = new SQLiteDBHelper();
@@ -44,7 +44,7 @@ package com.dehats.sqla.model
 		{
 			dispatchEvent(pEvt);
 		}
-				
+		
 		
 		public function openDBFile(pFile:File, isNew:Boolean=false, pPassword:String=""):Boolean
 		{
@@ -56,7 +56,7 @@ package com.dehats.sqla.model
 			// First, if we have a password, we'll generate a key
 			if (pPassword && pPassword.length > 0)
 			{
-							
+				
 				// if they entered the Base64 encryption key instead of a password
 				if (pPassword.length == 24 && pPassword.lastIndexOf("==") == 22)
 				{
@@ -64,13 +64,13 @@ package com.dehats.sqla.model
 					decoder.decode(pPassword);
 					key = decoder.toByteArray();
 				}
-				// if it's a legacy encrypted db
+					// if it's a legacy encrypted db
 				else if (pPassword == LEGACY_ENCRYPTION_KEY_HASH) 
 				{
 					key = legacyGenerateEncryptionKey(pPassword);
 				}				
-				
-				// for every other cases
+					
+					// for every other cases
 				else
 				{
 					try
@@ -85,17 +85,17 @@ package com.dehats.sqla.model
 				}
 				
 			}
-
-
+			
+			
 			// Now we can open the db
 			var success:Boolean = db.openDBFile(dbFile, key);
 			
 			if(success==false) return false;
- 			
+			
 			// We successfully opened the db
 			
 			loadSchema(); 
-				
+			
 			return true;				
 			
 		}
@@ -159,7 +159,7 @@ package com.dehats.sqla.model
 			getBase64EncryptionKey(key);
 			
 		}
-
+		
 		// Borrowed from Paul Roberston's EncryptionKeyGenerator
 		private function legacyGenerateEncryptionKey(hash:String):ByteArray
 		{
@@ -177,15 +177,15 @@ package com.dehats.sqla.model
 			
 			return result;
 		}
-
+		
 		private function getBase64EncryptionKey(key:ByteArray):void
 		{
 			var encoder:Base64Encoder = new Base64Encoder();
 			encoder.encodeBytes(key);
 			base64Key = encoder.toString();
-						
+			
 		}
-	
+		
 		/**
 		 * 
 		 * @param pPassword
@@ -199,12 +199,12 @@ package com.dehats.sqla.model
 			encoder.encodeBytes(key);
 			return encoder.toString();
 		}
-
+		
 		// STRUCTURE
 		
 		private function loadSchema():void
 		{
-
+			
 			schemas =  db.getSchemas();				
 			
 			if(schemas==null) return;
@@ -270,7 +270,7 @@ package com.dehats.sqla.model
 				
 				if(pExportData)
 				{
-					 str+= db.exportTableRecords( table)+File.lineEnding+File.lineEnding;										
+					str+= db.exportTableRecords( table)+File.lineEnding+File.lineEnding;										
 				}
 				
 			}
@@ -280,7 +280,11 @@ package com.dehats.sqla.model
 		
 		public function executeStatement(pStatement:String):SQLResult
 		{
-			return db.executeStatement(pStatement);
+			var result:SQLResult = db.executeStatement(pStatement) ;
+			if(result){
+				result.data.sort();
+			}
+			return result;
 		}
 		
 		// Tables		
@@ -305,25 +309,25 @@ package com.dehats.sqla.model
 			
 			return getTableByName( pNewName);
 		}
-
-
-
+		
+		
+		
 		public function dropTable(pTable:SQLTableSchema):void
 		{
 			
 			db.dropTable(pTable);
 			
 			loadSchema();
-
+			
 			tableRecords = [];
 		}
-
+		
 		public function emptyTable(pTable:SQLTableSchema):void
 		{			
 			db.emptyTable(pTable);			
 			tableRecords = [];
 		}
-
+		
 		
 		public function renameTable(pTable:SQLTableSchema, pName:String):SQLTableSchema
 		{
@@ -360,7 +364,7 @@ package com.dehats.sqla.model
 			loadSchema();
 			return getTableByName(tableName);
 		}
-
+		
 		public function renameColumn(pTable:SQLTableSchema, pCol:SQLColumnSchema, pName:String):SQLTableSchema
 		{
 			var tableName:String = pTable.name;

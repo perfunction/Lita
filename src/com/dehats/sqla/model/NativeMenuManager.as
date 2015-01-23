@@ -40,6 +40,7 @@ package com.dehats.sqla.model
 			            <ExportStructCommand label='Export Database'/>		        
 			            <CompactCommand label='Compact Database'/>
 			            <EncryptCommand label='Encrypt / Reencrypt Database'/>
+						<AnalyzeCommand label='Analyze Database'/>
 			        </DBMenu>
 		
 			        <EditMenu label='Edit'>
@@ -99,6 +100,10 @@ package com.dehats.sqla.model
 				case "ExportStructCommand":
 					pm.exportDB();
 				break;
+				
+				case "AnalyzeCommand":
+					pm.analyze();
+					break;
 				
 				case "CopyCommand":
 					nativeApp.copy();

@@ -114,7 +114,7 @@
 				}
 				
 				// reset dg columns
-				dataDG.columns = coltab.reverse() ;
+				dataDG.columns = coltab.sortOn("headerText") ;
 				
 			}			
 			

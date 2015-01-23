@@ -229,19 +229,21 @@ package com.dehats.sqla.model.presentation
 			// Check if the invocation corresponds to the app launch 
 			if(firstInvocation )
 			{					
-				firstInvocation=false;				
+				//firstInvocation=false;				
 				onAppLaunch(pEvt.arguments);
 			}
 		}
 		
 		private function onAppLaunch(parameters:Array):void
 		{
+			var f:File;
+			
 			// Decide what to do depending on the launch scenario :				
 			// 1. The user tried to open a file with the app	
 			
 			if( parameters.length>0)
 			{					
-				var f:File = new File(parameters[0]);										
+				f = new File(parameters[0]);										
 				if( f.exists ) openDBFile(f);
 				else Alert.show("Invocation argument is not an existing file", "Error");
 			}
@@ -254,7 +256,9 @@ package com.dehats.sqla.model.presentation
 				if( fileManager.recentlyOpened.length == 0 )  firstTimeGreetings();					
 				else
 				{
-					promptOpenFile();
+					f = new File(fileManager.recentlyOpened[0].path);										
+					if( f.exists ) openDBFile(f);
+					else promptOpenFile();
 				}  
 			}
 

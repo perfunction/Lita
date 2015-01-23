@@ -108,7 +108,7 @@
 					
 					// add datadgrid columns
 					var dgc:DataGridColumn = new DataGridColumn(col.name);
-					dgc.width = ( (this.measuredWidth-20) / (totalCols-1) );
+					//dgc.width = ( (this.measuredWidth-20) / (totalCols-1) );
 					coltab.push(dgc);
 					
 				}
@@ -322,7 +322,12 @@
 				fillSelectionForm( pm.selectedRecord);
 			}
 			
-			
+			override protected function updateDisplayList(w:Number, h:Number):void
+			{	
+				super.updateDisplayList(w, h);
+				
+				dataDG.width = w - 20;			
+			}
 		]]>
 	</fx:Script>
 	<mx:Label x="10" y="12" text="{ pm.tableRecords.length } record(s)"/>
@@ -341,60 +346,61 @@
 			   click=" pm.askEmptyCurrentTable()"/>
 	
 	
-	<mx:VDividedBox left="10" top="40" bottom="10" right="10">
-		
-		<mx:DataGrid id="dataDG" width="100%" height="50%"
-					 horizontalScrollPolicy="auto"
-					 selectedItem="{ pm.selectedRecord}"
-					 change=" selectRecord (dataDG.selectedItem)"
-					 dataProvider="{pm.tableRecords}">
-		</mx:DataGrid>
-		
-		<mx:HDividedBox width="100%" height="50%" horizontalAlign="center">
-			
-			<!-- tmp:visible used instead of enable because enable causes bugs -->
-			<mx:Form  id="dynForm"  
-					  visible="{pm.selectedRecord!=null}"
-					  height="100%" width="50%">
+	<mx:VDividedBox left="10" right="10" top="40" bottom="10" width="100%" height="100%">
+		<mx:HBox width="100%" height="65%" horizontalScrollPolicy="off" verticalScrollPolicy="off">
+			<mx:DataGrid id="dataDG" height="100%" 
+						 horizontalScrollPolicy="auto"
+						 selectedItem="{ pm.selectedRecord}"
+						 change=" selectRecord (dataDG.selectedItem)"
+						 dataProvider="{pm.tableRecords}">
+			</mx:DataGrid>
+		</mx:HBox>
+		<mx:HBox width="100%" height="35%">
+			<mx:HDividedBox width="100%" height="100%" horizontalAlign="center">
 				
-				<mx:FormHeading label="Selected Record" />
+				<!-- tmp:visible used instead of enable because enable causes bugs -->
+				<mx:Form  id="dynForm"  
+						  visible="{pm.selectedRecord!=null}"
+						  height="100%" width="50%">
+					
+					<mx:FormHeading label="Selected Record" />
+					
+					<mx:FormItem>
+						<mx:Button label="Save Record" 
+								   icon="{ AssetManager.ICON_SAVE}"
+								   enabled="{ pm.selectedRecord != null}"
+								   click=" pm.updateRecord( makeItemFrom( colToComponent) )" y="10" x="10"/>
+					</mx:FormItem>
+					
+					<mx:FormItem>
+						<mx:Button label="Delete record"
+								   icon="{ AssetManager.ICON_DELETE}" 
+								   enabled="{ pm.selectedRecord != null}"
+								   click=" pm.deleteRecord()" y="70" x="10"/>					
+					</mx:FormItem>
+					
+				</mx:Form>
 				
-				<mx:FormItem>
-					<mx:Button label="Save Record" 
-							   icon="{ AssetManager.ICON_SAVE}"
-							   enabled="{ pm.selectedRecord != null}"
-							   click=" pm.updateRecord( makeItemFrom( colToComponent) )" y="10" x="10"/>
-				</mx:FormItem>
 				
-				<mx:FormItem>
-					<mx:Button label="Delete record"
-							   icon="{ AssetManager.ICON_DELETE}" 
-							   enabled="{ pm.selectedRecord != null}"
-							   click=" pm.deleteRecord()" y="70" x="10"/>					
-				</mx:FormItem>
+				<mx:Form id="dynForm2" 
+						 height="100%"  width="50%">
+					
+					<mx:FormHeading label="New Record" />
+					
+					<mx:FormItem direction="horizontal">			
+						<mx:Button label="Add Record" 
+								   keyDown="if(event.keyCode== Keyboard.ENTER) {createRecord(clearFormCB.selected);event.preventDefault()}"
+								   icon="{ AssetManager.ICON_ADD}"
+								   click=" createRecord(clearFormCB.selected);" x="10" y="40"/>					
+						<mx:CheckBox id="clearFormCB" 
+									 selected="true"
+									 label="Add another record"/>
+					</mx:FormItem>
+					
+				</mx:Form>
 				
-			</mx:Form>
-			
-			
-			<mx:Form id="dynForm2" 
-					 height="100%"  width="50%">
-				
-				<mx:FormHeading label="New Record" />
-				
-				<mx:FormItem direction="horizontal">			
-					<mx:Button label="Add Record" 
-							   keyDown="if(event.keyCode== Keyboard.ENTER) {createRecord(clearFormCB.selected);event.preventDefault()}"
-							   icon="{ AssetManager.ICON_ADD}"
-							   click=" createRecord(clearFormCB.selected);" x="10" y="40"/>					
-					<mx:CheckBox id="clearFormCB" 
-								 selected="true"
-								 label="Add another record"/>
-				</mx:FormItem>
-				
-			</mx:Form>
-			
-		</mx:HDividedBox>		
-		
+			</mx:HDividedBox>		
+		</mx:HBox>
 	</mx:VDividedBox>
 	
 </s:Group>

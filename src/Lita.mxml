@@ -180,7 +180,7 @@
 		</mx:VBox>
 		<mx:VBox width="75%" height="100%">
 			
-			<mx:TabNavigator width="100%" height="100%" creationPolicy="all"
+			<mx:TabNavigator  width="100%" height="100%" creationPolicy="all"
 							 selectedIndex="{mainPM.selectedTab}"
 							 enabled="{ mainPM.isValidDBOpen}" 
 							 selectedTabTextStyleName="SelectedTabText">
@@ -199,7 +199,10 @@
 				<view:SQLStatementView label="SQL" width="100%" height="100%"
 									   pm="{ mainPM.sqlStatementPM}" />
 				
-			</mx:TabNavigator>		
+				<view:DatabaseAnalyzeView label="Analyze" width="100%" height="100%"
+									   pm="{ mainPM}" />
+				
+			</mx:TabNavigator>	
 		</mx:VBox>
 	</mx:HDividedBox>	
 </s:WindowedApplication>

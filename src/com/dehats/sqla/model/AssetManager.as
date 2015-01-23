@@ -6,6 +6,8 @@ package com.dehats.sqla.model
 		{
 		}
 		
+
+		
 		[Embed(source="../../../../assets/icons/logo.png")]
 		public static const LOGO_ICON:Class; 
 
@@ -65,6 +67,9 @@ package com.dehats.sqla.model
 
 		[Embed(source="../../../../assets/icons/help.png")]
 		public static const ICON_HELP:Class; 
+		
+		[Embed(source="../../../../assets/icons/icon_analyze.gif")]
+		public static const ICON_ANALYZE:Class; 
 
 	}
 }

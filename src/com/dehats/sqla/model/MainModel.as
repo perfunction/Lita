@@ -280,11 +280,7 @@ package com.dehats.sqla.model
 		
 		public function executeStatement(pStatement:String):SQLResult
 		{
-			var result:SQLResult = db.executeStatement(pStatement) ;
-			if(result){
-				result.data.sort();
-			}
-			return result;
+			return db.executeStatement(pStatement) ;
 		}
 		
 		// Tables		

@@ -481,7 +481,15 @@ package com.dehats.sqla.model.presentation
 			fileManager.createExportFile(pStatement );
 		}
 		
-		
+		public function analyze():void{
+			if( mainModel.dbFile==null) 
+			{
+				Alert.show("Database does not exist !", "Error");
+				return;
+			}
+			
+			mainView.promptDatabaseAnalyze();
+		}
 		public function compact():void
 		{
 			if( ! isValidDBOpen) 

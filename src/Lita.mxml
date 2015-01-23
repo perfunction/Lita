@@ -16,17 +16,18 @@
 	
 	<fx:Script>
 		<![CDATA[ 
-			import com.dehats.sqla.view.WelcomeDialog;
+			import com.dehats.sqla.model.AssetManager;
+			import com.dehats.sqla.model.presentation.IMainView;
+			import com.dehats.sqla.model.presentation.MainPM;
+			import com.dehats.sqla.view.AboutWin;
+			import com.dehats.sqla.view.CreateDBDialog;
+			import com.dehats.sqla.view.CreateTableDialog;
+			import com.dehats.sqla.view.OpenFileDialog;
 			import com.dehats.sqla.view.ReencryptionDialog;
 			import com.dehats.sqla.view.UpgradeEncryptionDialog;
-			import com.dehats.sqla.model.presentation.IMainView;
-			import com.dehats.sqla.view.CreateDBDialog;
-			import com.dehats.sqla.view.AboutWin;
-			import com.dehats.sqla.view.OpenFileDialog;
-			import com.dehats.sqla.model.AssetManager;
-			import com.dehats.sqla.model.presentation.MainPM;
+			import com.dehats.sqla.view.WelcomeDialog;
+			import com.dehats.sqla.view.DatabaseAnalyzeView;
 			import mx.managers.PopUpManager;
-			import com.dehats.sqla.view.CreateTableDialog;
 			
 			[Bindable]
 			private var mainPM:MainPM = new MainPM(nativeApplication);
@@ -99,6 +100,12 @@
 				win.pm = mainPM;
 				PopUpManager.centerPopUp(win);				
 			}
+			public function promptDatabaseAnalyze():void
+			{
+				var win:DatabaseAnalyzeView = PopUpManager.createPopUp(this, DatabaseAnalyzeView, true) as DatabaseAnalyzeView;
+				win.pm = mainPM;
+				PopUpManager.centerPopUp(win);				
+			}
 			
 			public function promptUpgradeEncryptionDialog():void
 			{
@@ -160,6 +167,12 @@
 				   icon="{AssetManager.ICON_COMPACT_DB}"
 				   click=" mainPM.compact()"/>
 		
+		<mx:Button label="Analyze DB"
+				   enabled="{mainPM.isValidDBOpen}"
+				   icon="{AssetManager.ICON_ANALYZE}"
+				   click=" mainPM.analyze()"/>
+		
+		
 		<mx:Button label="About"
 				   icon="{ AssetManager.ICON_HELP}"
 				   click=" mainPM.promptAboutDialog()"/>
@@ -199,8 +212,6 @@
 				<view:SQLStatementView label="SQL" width="100%" height="100%"
 									   pm="{ mainPM.sqlStatementPM}" />
 				
-				<view:DatabaseAnalyzeView label="Analyze" width="100%" height="100%"
-									   pm="{ mainPM}" />
 				
 			</mx:TabNavigator>	
 		</mx:VBox>

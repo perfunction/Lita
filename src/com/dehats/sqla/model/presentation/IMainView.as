@@ -9,6 +9,7 @@ package com.dehats.sqla.model.presentation
 		function promptCommercialDialog():void;
 		function promptUpgradeEncryptionDialog():void;
 		function promptCreateNewTable():void;
+		function promptDatabaseAnalyze():void;
 		
 	}
 }

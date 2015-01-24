@@ -21,18 +21,26 @@
 			
 			private function changeListener (e:Event):void {
 				var format:TextLayoutFormat = new TextLayoutFormat();
-				var reg:RegExp = /\b(select|from|update|insert|alter|delete|set|like|join|left|right|inner|outer|where|between|is|ignore|null|and|or|not|table)\b/gi;
-				var exc:Object;
-				
-				format.color = 0x000000;            
+				format.color = 0x000000;      
 				statementTa.setFormatOfRange(format, 0, statementTa.text.length);
 				
-
+				var reg:RegExp = /\b(union|on|select|from|update|insert|alter|create|delete|set|like|join|left|right|inner|outer|where|between|is|ignore|null|and|or|not|table|rename|to|unique|into|view|drop|index)\s/gi;
+				var exc:Object;
+				statementTa.text = statementTa.text.toLowerCase();
+				statementTa.text = statementTa.text.replace(reg, function(x){return x.toUpperCase();});
 				while(exc=reg.exec(statementTa.text))
 				{					
-					format.color = 0x0000ff;            
+					format.color = 0x0026FF;     
 					statementTa.setFormatOfRange(format, exc.index, exc.index+exc[0].length);
 				}
+				
+				reg = /\b(sum|abs|changes|char|coalesce|glob|ifnull|instr|hex|last_insert_rowid|length|like|liklihood|likely|lower|ltrim|max|min|nullif|printf|quote|random|randomblob|replace|round|rtrim|soundex|substr|trim|typeof|unlikely|unicode|upper|zeroblob)[(]/gi;
+				while(exc=reg.exec(statementTa.text))
+				{
+					format.color = 0xED18C2;            
+					statementTa.setFormatOfRange(format, exc.index, exc.index+exc[0].length-1);
+				}
+				
 				reg = /["'].*["']/gi ;
 				while(exc=reg.exec(statementTa.text))
 				{
@@ -68,7 +76,7 @@
 	
 	<mx:Label x="10" y="10" text="Statement"/>			
 	
-	<s:TextArea id="statementTa" fontSize="14"
+	<s:TextArea id="statementTa" fontSize="14" fontFamily="Consolas"
 				keyUp=" onKeyUp(event)" change="changeListener(event)"
 				text="{ pm.statement}"
 				styleName="statement" 
